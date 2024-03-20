@@ -10,7 +10,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   return (
     <AppContextProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen select-none">
         <Header />
         <Hero />
         <div className="container mx-auto py-10 flex-1">{children}</div>

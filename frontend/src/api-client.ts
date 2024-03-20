@@ -62,3 +62,17 @@ export const verifyToken = async () => {
 
   return response.json();
 };
+
+// create dish
+export const createDish = async (data: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/my-dishes`, {
+    method: "POST",
+    credentials: "include",
+    body: data,
+  });
+  if (!response) {
+    throw new Error("Failed to create dish.");
+  }
+
+  return response.json();
+};

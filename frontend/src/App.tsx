@@ -1,10 +1,13 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout.tsx";
 import Home from "./pages/Home.tsx";
 import Register from "./pages/Register.tsx";
 import Login from "./pages/Login.tsx";
+import CreateDish from "./pages/CreateDish.tsx";
+import { useAppContext } from "./context/AppContext.tsx";
 
 function App() {
+  const { isUserLoggedIn } = useAppContext();
   return (
     <BrowserRouter>
       <Routes>
@@ -32,6 +35,19 @@ function App() {
             </Layout>
           }
         />
+        {isUserLoggedIn && (
+          <>
+            <Route
+              path="/create-dish"
+              element={
+                <Layout>
+                  <CreateDish />
+                </Layout>
+              }
+            />
+          </>
+        )}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
