@@ -24,9 +24,6 @@ export const dishCategory = [
   "Chinese",
   "Indian",
   "Thai",
-  "Japanese",
-  "Mediterranean",
   "French",
   "American",
-  "Middle Eastern",
 ];

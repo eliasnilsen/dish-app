@@ -13,7 +13,7 @@ const LogoutButton = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries("verifyToken");
       toast.success("Successfully signed out.");
-      navigate("/login");
+      navigate("/");
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -26,7 +26,7 @@ const LogoutButton = () => {
 
   return (
     <button
-      className="px-2 py-1 rounded font-semibold border border-white hover:text-blue-800 hover:bg-white transition duration-150 ease-in-out"
+      className="bg-teal font-bold text-white px-3 py-2 rounded-md hover:brightness-75"
       onClick={handleClick}
     >
       Logout

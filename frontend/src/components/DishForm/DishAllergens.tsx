@@ -15,7 +15,7 @@ const DishAllergensSection = () => {
         {dishAllergens.map((allergen) => (
           <label
             key={allergen}
-            className="flex gap-2 items-center cursor-pointer bg-blue-100 rounded text-sm px-2 py-2 font-semibold"
+            className="flex gap-2 items-center cursor-pointer border rounded text-sm px-2 py-2 font-semibold"
           >
             <input
               type="checkbox"

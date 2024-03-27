@@ -5,6 +5,9 @@ import Register from "./pages/Register.tsx";
 import Login from "./pages/Login.tsx";
 import CreateDish from "./pages/CreateDish.tsx";
 import { useAppContext } from "./context/AppContext.tsx";
+import MyDishes from "./pages/MyDishes.tsx";
+import EditDish from "./pages/EditDish.tsx";
+import Search from "./pages/Search.tsx";
 
 function App() {
   const { isUserLoggedIn } = useAppContext();
@@ -28,6 +31,14 @@ function App() {
           }
         />
         <Route
+          path="/search"
+          element={
+            <Layout>
+              <Search />
+            </Layout>
+          }
+        />
+        <Route
           path="/"
           element={
             <Layout>
@@ -42,6 +53,22 @@ function App() {
               element={
                 <Layout>
                   <CreateDish />
+                </Layout>
+              }
+            />
+            <Route
+              path="/edit-dish/:dishId"
+              element={
+                <Layout>
+                  <EditDish />
+                </Layout>
+              }
+            />
+            <Route
+              path="/my-dishes"
+              element={
+                <Layout>
+                  <MyDishes />
                 </Layout>
               }
             />

@@ -5,6 +5,8 @@ import DishAllergens from "./DishAllergens";
 import ImagesSection from "./ImagesSection";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DishType } from "../../../../backend/src/shared/types";
+import { useEffect } from "react";
 
 const MAX_IMAGE_FILE_SIZE = 1024 * 1024 * 5; //5mb
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -16,6 +18,7 @@ const DishDetailsZodSchema = z.object({
   spiceLevel: z.string().min(1),
   prepTime: z.string().min(1),
   allergens: z.array(z.string()),
+  imageUrls: z.array(z.string()).optional(),
   imageFiles: z
     .custom<FileList>((files) => files instanceof FileList)
     .refine(
@@ -32,19 +35,28 @@ const DishDetailsZodSchema = z.object({
 export type DishDetailsFormValues = z.infer<typeof DishDetailsZodSchema>;
 
 type Props = {
+  dish?: DishType;
   onChanges: (data: FormData) => void;
   isLoading: boolean;
 };
 
-const CreateDishForm = ({ onChanges, isLoading }: Props) => {
+const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
   const formMethods = useForm<DishDetailsFormValues>({
     resolver: zodResolver(DishDetailsZodSchema),
   });
 
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
+
+  useEffect(() => {
+    reset(dish);
+  }, [dish, reset]);
 
   const onSubmit: SubmitHandler<DishDetailsFormValues> = (data) => {
     const formData = new FormData();
+    if (dish) {
+      formData.append("dishId", dish._id);
+    }
+
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("spiceLevel", data.spiceLevel);
@@ -56,10 +68,17 @@ const CreateDishForm = ({ onChanges, isLoading }: Props) => {
       formData.append(`allergens[${index}]`, allergen);
     });
 
-    // convert to array to be able to use forEach function.
-    Array.from(data.imageFiles).forEach((imageFile) => {
-      formData.append(`imageFiles`, imageFile);
-    });
+    if (data.imageUrls) {
+      data.imageUrls.forEach((imageUrl, index) => {
+        formData.append(`imageUrls[${index}]`, imageUrl);
+      });
+    }
+
+    if (data.imageFiles) {
+      Array.from(data.imageFiles).forEach((imageFile) => {
+        formData.append(`imageFiles`, imageFile);
+      });
+    }
 
     onChanges(formData);
 
@@ -82,7 +101,7 @@ const CreateDishForm = ({ onChanges, isLoading }: Props) => {
             type="submit"
             className="bg-blue-600 hover:bg-blue-500 font-bold text-white px-3 py-2 rounded disabled:opacity-50"
           >
-            Create Dish
+            {dish ? "Save changes" : "Create dish"}
           </button>
         </span>
       </form>

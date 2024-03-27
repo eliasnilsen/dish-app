@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import CreateDishForm from "../components/DishForm/CreateDishForm";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,9 @@ import * as ApiClient from "../api-client.ts";
 
 const CreateDish = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(ApiClient.createDish, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries("verifyToken");
       toast.success("Successfully created dish!");
       navigate("/");
     },

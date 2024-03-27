@@ -1,5 +1,6 @@
 import { RegisterFormValues } from "./components/RegisterForm";
 import { LoginFormValues } from "./components/LoginForm";
+import { DishSearchResponse, DishType } from "../../backend/src/shared/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -54,6 +55,7 @@ export const logout = async () => {
 // verify token
 export const verifyToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/verify-token`, {
+    method: "GET",
     credentials: "include",
   });
   if (!response.ok) {
@@ -72,6 +74,98 @@ export const createDish = async (data: FormData) => {
   });
   if (!response) {
     throw new Error("Failed to create dish.");
+  }
+
+  return response.json();
+};
+
+// get user dishes.
+export const getUserDishes = async (): Promise<DishType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/my-dishes`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching dishes.");
+  }
+
+  return response.json();
+};
+
+// get dish by id.
+export const getUserDishById = async (dishId: string): Promise<DishType> => {
+  const response = await fetch(`${API_BASE_URL}/api/my-dishes/${dishId}`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching dish.");
+  }
+
+  return response.json();
+};
+
+// update dish by id.
+export const updateUserDishById = async (data: FormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/my-dishes/${data.get("dishId")}`,
+    {
+      method: "PUT",
+      body: data,
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error updating dish.");
+  }
+
+  return response.json();
+};
+
+export type SearchParams = {
+  name?: string;
+  category?: string[];
+  spiceLevel?: string[];
+  prepTime?: string[];
+  allergens?: string[];
+  page?: string;
+  sortOption?: string;
+};
+
+export const searchDishes = async (
+  searchParams: SearchParams
+): Promise<DishSearchResponse> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append("name", searchParams.name || "");
+
+  searchParams.category?.forEach((category) =>
+    queryParams.append("category", category || "")
+  );
+  searchParams.spiceLevel?.forEach((spiceLevel) =>
+    queryParams.append("spiceLevel", spiceLevel || "")
+  );
+  searchParams.prepTime?.forEach((prepTime) =>
+    queryParams.append("prepTime", prepTime || "")
+  );
+  searchParams.allergens?.forEach((allergens) =>
+    queryParams.append("allergens", allergens || "")
+  );
+
+  queryParams.append("page", searchParams.page || "");
+  queryParams.append("sortOption", searchParams.sortOption || "");
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/dishes/search?${queryParams}`,
+    {
+      method: "GET",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error fetching dishes.");
   }
 
   return response.json();

@@ -19,8 +19,8 @@ const DishCategorySection = () => {
             key={category}
             className={
               selectedCategory === category
-                ? "flex justify-center cursor-pointer bg-blue-300 rounded-full text-sm px-4 py-3 font-semibold"
-                : "flex justify-center cursor-pointer bg-blue-100 rounded-full text-sm px-4 py-3 font-semibold"
+                ? "flex justify-center cursor-pointer bg-teal text-white rounded-full text-sm px-4 py-3 font-semibold"
+                : "flex justify-center cursor-pointer border rounded-full text-sm px-4 py-3 font-semibold"
             }
           >
             <input
