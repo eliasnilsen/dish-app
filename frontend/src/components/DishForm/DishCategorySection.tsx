@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { dishCategory } from "../../misc/utils";
-import { DishDetailsFormValues } from "./CreateDishForm";
+import { DishFormData } from "./CreateDishForm";
 
 const DishCategorySection = () => {
   const {
     register,
     watch,
     formState: { errors },
-  } = useFormContext<DishDetailsFormValues>();
+  } = useFormContext<DishFormData>();
   const selectedCategory = watch("category");
 
   return (
@@ -26,7 +26,9 @@ const DishCategorySection = () => {
             <input
               type="radio"
               value={category}
-              {...register("category")}
+              {...register("category", {
+                required: "This field is required",
+              })}
               className="hidden"
             />
             <span>{category}</span>

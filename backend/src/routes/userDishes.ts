@@ -6,6 +6,12 @@ import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
 import { DishType } from "../shared/types";
 
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const router = express.Router();
 
 const imageStorage = multer.memoryStorage();
@@ -27,17 +33,17 @@ router.post(
     body("spiceLevel").notEmpty().withMessage("spiceLevel is required."),
     body("prepTime").notEmpty().withMessage("prepTime is required."),
     body("category").notEmpty().withMessage("category is required."),
-    body("allergens").notEmpty().withMessage("allergens is required."),
-    body("imageFiles").notEmpty().withMessage("image(s) is required."),
+    body("allergens"),
+    body("imageFile").notEmpty().withMessage("image is required."),
   ],
-  image.array("imageFiles", 5),
+  image.array("imageFile", 1),
   async (req: Request, res: Response) => {
     try {
-      const imageFiles = req.files as Express.Multer.File[];
+      const imageFile = req.files as Express.Multer.File[];
       const newDish: DishType = req.body;
 
-      const imageUrls = await uploadImages(imageFiles);
-      newDish.imageUrls = imageUrls;
+      const imageUrl = await uploadImage(imageFile[0]);
+      newDish.imageUrl = imageUrl;
       newDish.lastUpdated = new Date();
       newDish.userId = req.userId;
 
@@ -77,7 +83,7 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
 router.put(
   "/:dishId",
   verifyToken,
-  image.array("imageFiles"),
+  image.array("imageFile"),
   async (req: Request, res: Response) => {
     try {
       const updatedDish: DishType = req.body;
@@ -96,10 +102,13 @@ router.put(
         return res.status(404).json({ message: "Dish not found." });
       }
 
-      const imageFiles = req.files as Express.Multer.File[];
-      const updatedImageUrls = await uploadImages(imageFiles);
+      if (req.files?.length !== 0) {
+        const imageFile = req.files as Express.Multer.File[];
+        const updatedImageUrl = await uploadImage(imageFile[0]);
 
-      dish.imageUrls = [...updatedImageUrls, ...(updatedDish.imageUrls || [])];
+        // await deleteImage(dish.imageUrl);
+        dish.imageUrl = updatedImageUrl;
+      }
 
       await dish.save();
       res.status(201).json(dish);
@@ -109,20 +118,24 @@ router.put(
   }
 );
 
-async function uploadImages(imageFiles: Express.Multer.File[]) {
-  const uploadPromises = imageFiles.map(async (image) => {
-    const b64 = Buffer.from(image.buffer).toString("base64");
-    let dataURI = "data:" + image.mimetype + ";base64," + b64;
+async function uploadImage(imageFile: Express.Multer.File) {
+  const b64 = Buffer.from(imageFile.buffer).toString("base64");
+  let dataURI = "data:" + imageFile.mimetype + ";base64," + b64;
 
-    const cloudinaryUpload = await cloudinary.v2.uploader.unsigned_upload(
-      dataURI,
-      "dishApp"
-    );
-    return cloudinaryUpload.url;
-  });
-
-  const imageUrls = await Promise.all(uploadPromises);
-  return imageUrls;
+  const cloudinaryUpload = await cloudinary.v2.uploader.unsigned_upload(
+    dataURI,
+    "dishApp"
+  );
+  return cloudinaryUpload.url;
 }
+
+// async function deleteImage(imageUrl: string) {
+//   const regex = /\/dishApp\/([a-zA-Z0-9]+)/;
+//   const match = imageUrl.match(regex)?.toString();
+
+//   await cloudinary.v2.uploader
+//     .destroy(match as string)
+//     .then((result) => console.log(result));
+// }
 
 export default router;

@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { dishAllergens } from "../../misc/utils";
-import { DishDetailsFormValues } from "./CreateDishForm";
+import { DishFormData } from "./CreateDishForm";
 
 const DishAllergensSection = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<DishDetailsFormValues>();
+  } = useFormContext<DishFormData>();
 
   return (
     <div className="space-y-4 p-8 rounded">

@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Dish from "../models/dish";
 import { DishSearchResponse } from "../shared/types";
+import { param, validationResult } from "express-validator";
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.get("/search", async (req: Request, res: Response) => {
       .skip(pageSkip)
       .limit(pageSize);
 
-    const total = await Dish.countDocuments();
+    const total = await Dish.countDocuments(query);
 
     const response: DishSearchResponse = {
       data: dishes,
@@ -99,5 +100,36 @@ const filteringQuery = (queryParams: any) => {
 
   return filteringQuery;
 };
+
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const dishes = await Dish.find().sort("-lastUpdated");
+    res.json(dishes);
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(500).send("Error fetching dishes.");
+  }
+});
+
+router.get(
+  "/:id",
+  [param("id").notEmpty().withMessage("A dish id is required.")],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const dishId = req.params.id.toString();
+
+    try {
+      const dish = await Dish.findById(dishId);
+      res.json(dish);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error fetching dish." });
+    }
+  }
+);
 
 export default router;

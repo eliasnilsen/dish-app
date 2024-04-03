@@ -3,36 +3,19 @@ import DishDetails from "./DishDetails";
 import DishCategorySection from "./DishCategorySection";
 import DishAllergens from "./DishAllergens";
 import ImagesSection from "./ImagesSection";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { DishType } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
 
-const MAX_IMAGE_FILE_SIZE = 1024 * 1024 * 5; //5mb
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
-
-const DishDetailsZodSchema = z.object({
-  name: z.string().min(1),
-  description: z.string().min(1),
-  category: z.string().min(1),
-  spiceLevel: z.string().min(1),
-  prepTime: z.string().min(1),
-  allergens: z.array(z.string()),
-  imageUrls: z.array(z.string()).optional(),
-  imageFiles: z
-    .custom<FileList>((files) => files instanceof FileList)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Accepted Formats: JPG/JPEG/PNG"
-    )
-    .refine(
-      (files) => files?.[0]?.size <= MAX_IMAGE_FILE_SIZE,
-      "Max file size: 5mb"
-    )
-    .refine((files) => files.length < 5, "Max 5 images."),
-});
-
-export type DishDetailsFormValues = z.infer<typeof DishDetailsZodSchema>;
+export type DishFormData = {
+  name: string;
+  description: string;
+  spiceLevel: string;
+  prepTime: string;
+  category: string;
+  allergens: string[];
+  imageFile: FileList;
+  imageUrl: string;
+};
 
 type Props = {
   dish?: DishType;
@@ -41,9 +24,7 @@ type Props = {
 };
 
 const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
-  const formMethods = useForm<DishDetailsFormValues>({
-    resolver: zodResolver(DishDetailsZodSchema),
-  });
+  const formMethods = useForm<DishFormData>();
 
   const { handleSubmit, reset } = formMethods;
 
@@ -51,7 +32,7 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
     reset(dish);
   }, [dish, reset]);
 
-  const onSubmit: SubmitHandler<DishDetailsFormValues> = (data) => {
+  const onSubmit: SubmitHandler<DishFormData> = (data) => {
     const formData = new FormData();
     if (dish) {
       formData.append("dishId", dish._id);
@@ -63,25 +44,21 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
     formData.append("prepTime", data.prepTime);
     formData.append("category", data.category);
 
-    // add an individual data string for each allergen provided by the list.
+    if (data.allergens.length === 0) {
+      formData.append("allergens", "");
+    }
+
     data.allergens.forEach((allergen, index) => {
       formData.append(`allergens[${index}]`, allergen);
     });
 
-    if (data.imageUrls) {
-      data.imageUrls.forEach((imageUrl, index) => {
-        formData.append(`imageUrls[${index}]`, imageUrl);
-      });
+    if (data.imageUrl) {
+      formData.append(`imageUrl`, data.imageUrl);
     }
 
-    if (data.imageFiles) {
-      Array.from(data.imageFiles).forEach((imageFile) => {
-        formData.append(`imageFiles`, imageFile);
-      });
-    }
+    if (data.imageFile) formData.append(`imageFile`, data.imageFile[0]);
 
     onChanges(formData);
-
     console.log(data);
   };
 
@@ -99,7 +76,7 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-blue-600 hover:bg-blue-500 font-bold text-white px-3 py-2 rounded disabled:opacity-50"
+            className="bg-teal hover:brightness-75 font-bold text-white px-3 py-2 rounded disabled:opacity-50"
           >
             {dish ? "Save changes" : "Create dish"}
           </button>

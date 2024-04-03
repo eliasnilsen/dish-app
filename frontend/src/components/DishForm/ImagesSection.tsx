@@ -1,6 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { DishDetailsFormValues } from "./CreateDishForm";
+import { DishFormData } from "./CreateDishForm";
 import { LuTrash2 } from "react-icons/lu";
+
+const MAX_IMAGE_FILE_SIZE = 1024 * 1024 * 5; //5mb
 
 const ImagesSection = () => {
   const {
@@ -8,56 +10,62 @@ const ImagesSection = () => {
     formState: { errors },
     watch,
     setValue,
-  } = useFormContext<DishDetailsFormValues>();
+  } = useFormContext<DishFormData>();
 
-  type Props = {
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>;
-    imageUrl: string;
-  };
-
-  const existingImageUrls = watch("imageUrls");
-
-  //discards images that were "removed" from the form.
-  const handleDelete = ({ event, imageUrl }: Props) => {
-    event.preventDefault();
-    setValue(
-      "imageUrls",
-      existingImageUrls?.filter((url) => url !== imageUrl)
-    );
-  };
+  const existingImageUrl = watch("imageUrl");
 
   return (
     <div className="space-y-4 p-8 rounded">
-      <h2 className="text-2xl font-bold">Add Images</h2>
-      <div className="flex flex-col">
-        {existingImageUrls && (
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
-            {existingImageUrls.map((imageUrl) => (
-              <div key={imageUrl} className="relative group">
-                <img
-                  src={imageUrl}
-                  alt="dish image"
-                  className="min-h-full object-cover"
-                />
-                <button
-                  onClick={(event) => handleDelete({ event, imageUrl })}
-                  className="flex items-center justify-center absolute top-0 right-0 p-2 bg-red-600 bg-opacity-50 hover:bg-opacity-75"
-                >
-                  <LuTrash2 />
-                </button>
-              </div>
-            ))}
+      <h2 className="text-2xl font-bold">Add Image</h2>
+      <div className="flex flex-col gap-2">
+        {existingImageUrl && (
+          <div className="">
+            <div className="relative group col-span-1 w-fit">
+              <img
+                src={existingImageUrl}
+                alt="dish image"
+                className="object-cover w-[200px]"
+              />
+              <button
+                onClick={() => setValue("imageUrl", "")}
+                className="flex items-center justify-center absolute top-0 right-0 p-2 bg-red-600 hover:bg-opacity-75"
+              >
+                <LuTrash2 />
+              </button>
+            </div>
           </div>
         )}
         <input
           type="file"
-          multiple
           accept="image/*"
-          {...register("imageFiles")}
+          {...register("imageFile", {
+            validate: (imageFile) => {
+              if (existingImageUrl && imageFile === undefined) {
+                return true;
+              }
+
+              if (!imageFile[0] && !existingImageUrl) {
+                return "Image is required.";
+              }
+
+              if (existingImageUrl && imageFile[0]) {
+                return "Max one image.";
+              }
+
+              if (
+                imageFile.length > 0 &&
+                imageFile[0].size > MAX_IMAGE_FILE_SIZE
+              ) {
+                return "Max image size is 5mb.";
+              }
+
+              return true;
+            },
+          })}
         />
-        {errors.imageFiles && (
+        {errors.imageFile && (
           <span className="text-red-600 font-normal text-xs">
-            {errors.imageFiles.message}
+            {errors.imageFile.message}
           </span>
         )}
       </div>

@@ -10,10 +10,7 @@ export default {
         nunito: ["Nunito", "sans-serif"]
       },
       colors: {
-        blue: "#51829B",
-        lightBlue: "#9BB0C1",
-        orange: "#F6995C",
-        beige: "#EADFB4",
+        caution: "#FFC94A",
         teal: "#43766C"
       }
     },

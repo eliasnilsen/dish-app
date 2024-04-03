@@ -8,8 +8,8 @@ const dishSchema = new mongoose.Schema<DishType>({
   spiceLevel: { type: String, required: true },
   prepTime: { type: String, required: true },
   category: { type: String, required: true },
-  allergens: [{ type: String, required: true }],
-  imageUrls: [{ type: String, required: true }],
+  allergens: [{ type: String }],
+  imageUrl: { type: String, required: true },
   lastUpdated: { type: Date, required: true },
 });
 

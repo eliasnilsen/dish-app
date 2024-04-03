@@ -13,13 +13,19 @@ export const SearchContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>(
+    () => sessionStorage.getItem("name") || ""
+  );
   const [dishId, setDishId] = useState<string>("");
 
   const saveSearchValues = (name: string, dishId?: string) => {
     setName(name);
     if (dishId) {
       setDishId(dishId);
+    }
+    sessionStorage.setItem("name", name);
+    if (dishId) {
+      sessionStorage.setItem("dishId", dishId);
     }
   };
 

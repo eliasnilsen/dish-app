@@ -8,6 +8,7 @@ import { useAppContext } from "./context/AppContext.tsx";
 import MyDishes from "./pages/MyDishes.tsx";
 import EditDish from "./pages/EditDish.tsx";
 import Search from "./pages/Search.tsx";
+import DishDetails from "./pages/DishDetails.tsx";
 
 function App() {
   const { isUserLoggedIn } = useAppContext();
@@ -69,6 +70,14 @@ function App() {
               element={
                 <Layout>
                   <MyDishes />
+                </Layout>
+              }
+            />
+            <Route
+              path="/details/:dishId"
+              element={
+                <Layout>
+                  <DishDetails />
                 </Layout>
               }
             />

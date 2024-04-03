@@ -79,6 +79,19 @@ export const createDish = async (data: FormData) => {
   return response.json();
 };
 
+// get all dishes.
+export const getDishes = async (): Promise<DishType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/dishes`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching dishes.");
+  }
+
+  return response.json();
+};
+
 // get user dishes.
 export const getUserDishes = async (): Promise<DishType[]> => {
   const response = await fetch(`${API_BASE_URL}/api/my-dishes`, {
@@ -166,6 +179,18 @@ export const searchDishes = async (
 
   if (!response.ok) {
     throw new Error("Error fetching dishes.");
+  }
+
+  return response.json();
+};
+
+export const getDishById = async (dishId: string): Promise<DishType> => {
+  const response = await fetch(`${API_BASE_URL}/api/dishes/${dishId}`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching dish.");
   }
 
   return response.json();

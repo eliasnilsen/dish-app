@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { dishPrepTime, dishSpiceLevel } from "../../misc/utils";
-import { DishDetailsFormValues } from "./CreateDishForm";
+import { DishFormData } from "./CreateDishForm";
 
 const DishDetails = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<DishDetailsFormValues>();
+  } = useFormContext<DishFormData>();
 
   return (
     <div className="space-y-4 p-8 rounded">
@@ -16,7 +16,9 @@ const DishDetails = () => {
           <label className="flex flex-col font-semibold text-sm">
             Name
             <input
-              {...register("name")}
+              {...register("name", {
+                required: "This field is required",
+              })}
               type="text"
               className="border rounded w-full py-1 px-2 mt-1 text-base font-normal"
             />
@@ -32,7 +34,9 @@ const DishDetails = () => {
           <label className="flex flex-col font-semibold text-sm">
             Description
             <textarea
-              {...register("description")}
+              {...register("description", {
+                required: "This field is required",
+              })}
               rows={10}
               className="border resize-none rounded w-full py-1 px-2 mt-1 text-base font-normal"
             ></textarea>
@@ -49,11 +53,13 @@ const DishDetails = () => {
             <label className="flex flex-col font-semibold text-sm">
               Spice Level
               <select
-                {...register("spiceLevel")}
+                {...register("spiceLevel", {
+                  required: "This field is required",
+                })}
                 className="bg-blue-100 border rounded w-full py-2 px-2 mt-1"
               >
                 <option value="" className="text-sm" disabled>
-                  --Spice Level--
+                  Spice Level
                 </option>
                 {dishSpiceLevel.map((spiceLevel) => (
                   <option
@@ -76,11 +82,13 @@ const DishDetails = () => {
             <label className="flex flex-col font-semibold text-sm">
               Prep Time
               <select
-                {...register("prepTime")}
+                {...register("prepTime", {
+                  required: "This field is required",
+                })}
                 className="bg-blue-100 border rounded w-full py-2 px-2 mt-1"
               >
                 <option value="" className="text-sm" disabled>
-                  --Prep Time--
+                  Prep Time
                 </option>
                 {dishPrepTime.map((prepTime) => (
                   <option key={prepTime} value={prepTime} className="text-sm">

@@ -7,7 +7,7 @@ export type DishType = {
   prepTime: string;
   category: string;
   allergens: string[];
-  imageUrls: string[];
+  imageUrl: string;
   lastUpdated: Date;
 };
 

@@ -9,11 +9,11 @@ type Props = {
 const DishSearchFieldCard = ({ dish }: Props) => {
   return (
     <Link
-      to={dish._id}
+      to={`/details/${dish._id}`}
       className="flex md:flex-col bg-white border group h-[10rem] md:h-[15rem] shadow rounded-md overflow-hidden"
     >
       <img
-        src={dish.imageUrls[0]}
+        src={dish.imageUrl}
         alt="image of dish"
         className="md:w-full md:h-[50%] w-[50%] object-cover"
       />
@@ -23,7 +23,7 @@ const DishSearchFieldCard = ({ dish }: Props) => {
             <LuChefHat />
             {dish.category}
           </span>
-          <span className="text-sm font-semibold line-clamp-2 break-words">
+          <span className="text-sm font-semibold line-clamp-2 break-words text-balance">
             {dish.name}
           </span>
         </div>

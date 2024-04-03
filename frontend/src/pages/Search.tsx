@@ -113,7 +113,7 @@ const Search = () => {
             className="bg-white border py-1 px-2 rounded-md"
           >
             <option value="" disabled>
-              --Sort by--
+              Sort by
             </option>
             <option value="spiceLevelDes">Spice level (low to high)</option>
             <option value="spiceLevelAsc">Spice level (high to low)</option>
