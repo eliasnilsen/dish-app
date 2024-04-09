@@ -82,7 +82,7 @@ const Search = () => {
 
   return (
     <div className="grid grid-cols-3 lg:grid-cols-8 gap-2">
-      <div className="col-span-1 lg:col-span-2 p-4 sticky top-24 h-fit max-h-[calc(100dvh-7rem)] border rounded-md overflow-y-scroll overscroll-auto">
+      <div className="col-span-1 lg:col-span-2 p-4 sticky top-24 h-fit max-h-[calc(100dvh-7rem)] overflow-y-scroll overscroll-auto bg-white">
         <div className="space-y-4">
           <CategoryFilter
             selectedCategories={selectedCategories}
@@ -110,7 +110,7 @@ const Search = () => {
           <select
             value={sortOption}
             onChange={(event) => setSortOption(event.target.value)}
-            className="bg-white border py-1 px-2 rounded-md"
+            className="bg-white border py-1 px-2"
           >
             <option value="" disabled>
               Sort by
@@ -123,7 +123,7 @@ const Search = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {dishData?.data.map((dish) => (
-            <DishSearchFieldCard key={dish._id} dish={dish} />
+            <DishSearchFieldCard route="details" key={dish._id} dish={dish} />
           ))}
         </div>
         {dishData?.pagination.total && (

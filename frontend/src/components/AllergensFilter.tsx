@@ -8,20 +8,20 @@ type Props = {
 const AllergensFilter = ({ selectedAllergens, onChange }: Props) => {
   return (
     <div className="space-y-2">
-      <h2 className="font-bold">{`Allergens (Does not contain)`}</h2>
+      <h2 className="font-semibold">{`Allergens (Does not contain)`}</h2>
       {dishAllergens.map((allergens) => (
         <label
           key={allergens}
-          className="flex items-center gap-1 rounded px-2 w-fit cursor-pointer"
+          className="flex items-center gap-1 w-fit cursor-pointer"
         >
           <input
             type="checkbox"
-            className="rounded cursor-pointer"
+            className="checkbox"
             value={allergens}
             checked={selectedAllergens.includes(allergens)}
             onChange={onChange}
           />
-          <span>{allergens}</span>
+          <span className="">{allergens}</span>
         </label>
       ))}
     </div>

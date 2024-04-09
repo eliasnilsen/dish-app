@@ -72,6 +72,7 @@ export const createDish = async (data: FormData) => {
     credentials: "include",
     body: data,
   });
+
   if (!response) {
     throw new Error("Failed to create dish.");
   }
@@ -121,13 +122,13 @@ export const getUserDishById = async (dishId: string): Promise<DishType> => {
 };
 
 // update dish by id.
-export const updateUserDishById = async (data: FormData) => {
+export const updateUserDishById = async (data: FormData): Promise<DishType> => {
   const response = await fetch(
     `${API_BASE_URL}/api/my-dishes/${data.get("dishId")}`,
     {
       method: "PUT",
-      body: data,
       credentials: "include",
+      body: data,
     }
   );
 

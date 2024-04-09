@@ -19,7 +19,7 @@ const EditDish = () => {
   const { mutate, isLoading } = useMutation(apiClient.updateUserDishById, {
     onSuccess: async () => {
       toast.success("Successfully updated dish!");
-      navigate("/");
+      navigate("/my-dishes");
     },
     onError: (error: Error) => {
       toast.error(error.message);

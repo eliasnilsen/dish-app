@@ -27,3 +27,14 @@ export const dishCategory = [
   "French",
   "American",
 ];
+
+export const dishIngredientUnits = [
+  "ts",
+  "tbs",
+  "g",
+  "hg",
+  "ml",
+  "dl",
+  "l",
+  "piece(s)",
+];

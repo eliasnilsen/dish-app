@@ -34,20 +34,43 @@ router.post(
     body("prepTime").notEmpty().withMessage("prepTime is required."),
     body("category").notEmpty().withMessage("category is required."),
     body("allergens"),
-    body("imageFile").notEmpty().withMessage("image is required."),
+    body("ingredients").notEmpty().withMessage("ingredients are required."),
+    body("imageFile").notEmpty().withMessage("an image is required."),
   ],
   image.array("imageFile", 1),
   async (req: Request, res: Response) => {
     try {
       const imageFile = req.files as Express.Multer.File[];
-      const newDish: DishType = req.body;
+
+      const {
+        name,
+        description,
+        spiceLevel,
+        prepTime,
+        category,
+        allergens,
+        ingredients,
+      } = req.body;
+
+      const parsedAllergens = JSON.parse(allergens);
+      const parsedIngredients = JSON.parse(ingredients);
 
       const imageUrl = await uploadImage(imageFile[0]);
-      newDish.imageUrl = imageUrl;
-      newDish.lastUpdated = new Date();
-      newDish.userId = req.userId;
 
-      const dish = new Dish(newDish);
+      const newDish: Partial<DishType> = {
+        name,
+        description,
+        spiceLevel,
+        prepTime,
+        category,
+        allergens: parsedAllergens,
+        ingredients: parsedIngredients,
+        imageUrl,
+        lastUpdated: new Date(),
+        userId: req.userId,
+      };
+
+      const dish = new Dish(newDish as DishType);
       await dish.save();
 
       res.status(201).send(dish);
@@ -86,8 +109,35 @@ router.put(
   image.array("imageFile"),
   async (req: Request, res: Response) => {
     try {
-      const updatedDish: DishType = req.body;
-      updatedDish.lastUpdated = new Date();
+      const {
+        name,
+        description,
+        spiceLevel,
+        prepTime,
+        category,
+        allergens,
+        ingredients,
+        imageUrl,
+        userId,
+      } = req.body;
+
+      const imageFile = req.files as Express.Multer.File[];
+
+      const parsedAllergens = JSON.parse(allergens);
+      const parsedIngredients = JSON.parse(ingredients);
+
+      const updatedDish: Partial<DishType> = {
+        name,
+        description,
+        spiceLevel,
+        prepTime,
+        category,
+        allergens: parsedAllergens,
+        ingredients: parsedIngredients,
+        imageUrl,
+        lastUpdated: new Date(),
+        userId,
+      };
 
       const dish = await Dish.findOneAndUpdate(
         {
@@ -102,15 +152,14 @@ router.put(
         return res.status(404).json({ message: "Dish not found." });
       }
 
-      if (req.files?.length !== 0) {
+      if (imageFile[0] !== undefined) {
         const imageFile = req.files as Express.Multer.File[];
         const updatedImageUrl = await uploadImage(imageFile[0]);
 
-        // await deleteImage(dish.imageUrl);
         dish.imageUrl = updatedImageUrl;
+        await dish.save();
       }
 
-      await dish.save();
       res.status(201).json(dish);
     } catch (error) {
       res.status(500).json({ message: "Something went wrong." });

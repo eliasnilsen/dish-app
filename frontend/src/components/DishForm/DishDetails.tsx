@@ -9,8 +9,7 @@ const DishDetails = () => {
   } = useFormContext<DishFormData>();
 
   return (
-    <div className="space-y-4 p-8 rounded">
-      <h2 className="text-2xl font-bold">Create Dish</h2>
+    <div className="space-y-4 rounded">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col">
           <label className="flex flex-col font-semibold text-sm">
@@ -56,7 +55,7 @@ const DishDetails = () => {
                 {...register("spiceLevel", {
                   required: "This field is required",
                 })}
-                className="bg-blue-100 border rounded w-full py-2 px-2 mt-1"
+                className="bg-stone-200 border rounded w-full py-2 px-2 mt-1"
               >
                 <option value="" className="text-sm" disabled>
                   Spice Level
@@ -65,7 +64,7 @@ const DishDetails = () => {
                   <option
                     key={spiceLevel}
                     value={spiceLevel}
-                    className="text-sm"
+                    className="text-sm font-normal"
                   >
                     {spiceLevel}
                   </option>
@@ -85,13 +84,17 @@ const DishDetails = () => {
                 {...register("prepTime", {
                   required: "This field is required",
                 })}
-                className="bg-blue-100 border rounded w-full py-2 px-2 mt-1"
+                className="bg-stone-200 border rounded w-full py-2 px-2 mt-1"
               >
                 <option value="" className="text-sm" disabled>
                   Prep Time
                 </option>
                 {dishPrepTime.map((prepTime) => (
-                  <option key={prepTime} value={prepTime} className="text-sm">
+                  <option
+                    key={prepTime}
+                    value={prepTime}
+                    className="text-sm font-normal"
+                  >
                     {prepTime}
                   </option>
                 ))}

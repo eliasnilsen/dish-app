@@ -1,0 +1,105 @@
+import { useFieldArray, useFormContext } from "react-hook-form";
+import { DishFormData } from "./CreateDishForm";
+import { dishIngredientUnits } from "../../misc/utils";
+
+const DishIngredientsSection = () => {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<DishFormData>();
+
+  const { fields, append, remove } = useFieldArray({
+    name: "ingredients",
+    control,
+    rules: {
+      required: "Atleast one ingredient is required.",
+    },
+  });
+
+  return (
+    <div className="space-y-4 rounded">
+      <h2>Ingredients</h2>
+      <div className="border-2">
+        <div className="p-2 space-y-2 w-full">
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id} className="flex items-end gap-2 w-full">
+                <label className="flex flex-col">
+                  Name
+                  <input
+                    {...register(`ingredients.${index}.name`, {
+                      required: true,
+                    })}
+                    type="text"
+                    className="p-1"
+                  />
+                </label>
+
+                <label className="flex flex-col">
+                  Quantity
+                  <input
+                    {...register(`ingredients.${index}.quantity`, {
+                      required: true,
+                    })}
+                    type="number"
+                    className="p-1"
+                  />
+                </label>
+
+                <label className="flex flex-col">
+                  Unit
+                  <select
+                    {...register(`ingredients.${index}.unit`, {
+                      required: "This field is required",
+                    })}
+                    className="p-1 bg-white"
+                  >
+                    {dishIngredientUnits.map((unit) => (
+                      <option key={unit} value={unit} className="">
+                        {unit}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <button
+                  onClick={() => {
+                    remove(index);
+                  }}
+                  className="primary-btn-danger"
+                >
+                  Delete
+                </button>
+              </div>
+            );
+          })}
+
+          {errors.ingredients && (
+            <span className="text-red-600 font-normal text-xs">
+              {errors.ingredients.message}
+            </span>
+          )}
+          <div>
+            <button
+              className="primary-btn-teal"
+              onClick={() => {
+                append({ name: "", quantity: 0, unit: "" });
+              }}
+            >
+              New
+            </button>
+          </div>
+
+          {errors.ingredients?.root && (
+            <span className="text-red-600 font-normal text-xs">
+              {errors.ingredients.root.message}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DishIngredientsSection;

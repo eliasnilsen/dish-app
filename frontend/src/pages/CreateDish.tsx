@@ -10,7 +10,7 @@ const CreateDish = () => {
   const { mutate, isLoading } = useMutation(ApiClient.createDish, {
     onSuccess: async () => {
       toast.success("Successfully created dish!");
-      navigate("/");
+      navigate("/my-dishes");
     },
     onError: (error: Error) => {
       toast.error(error.message);

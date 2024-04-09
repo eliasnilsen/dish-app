@@ -47,6 +47,14 @@ function App() {
             </Layout>
           }
         />
+        <Route
+          path="/details/:dishId"
+          element={
+            <Layout>
+              <DishDetails />
+            </Layout>
+          }
+        />
         {isUserLoggedIn && (
           <>
             <Route
@@ -70,14 +78,6 @@ function App() {
               element={
                 <Layout>
                   <MyDishes />
-                </Layout>
-              }
-            />
-            <Route
-              path="/details/:dishId"
-              element={
-                <Layout>
-                  <DishDetails />
                 </Layout>
               }
             />

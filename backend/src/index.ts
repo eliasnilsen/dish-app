@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import dishesRoutes from "./routes/dishes";
+const bodyParser = require("body-parser");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -22,6 +23,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,

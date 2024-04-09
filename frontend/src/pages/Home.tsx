@@ -20,12 +20,12 @@ const Home = () => {
       <div className="grid gap-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {topRowDishes?.map((dish) => (
-            <RecentDishCard dish={dish} />
+            <RecentDishCard key={dish._id} dish={dish} />
           ))}
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {bottomRowDishes?.map((dish) => (
-            <RecentDishCard dish={dish} />
+            <RecentDishCard key={dish._id} dish={dish} />
           ))}
         </div>
       </div>

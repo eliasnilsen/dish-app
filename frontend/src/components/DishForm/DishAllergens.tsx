@@ -9,7 +9,7 @@ const DishAllergensSection = () => {
   } = useFormContext<DishFormData>();
 
   return (
-    <div className="space-y-4 p-8 rounded">
+    <div className="space-y-4 rounded">
       <h2 className="text-2xl font-bold">Allergens</h2>
       <div className="grid grid-cols-3 lg:grid-cols-6 gap-2">
         {dishAllergens.map((allergen) => (
@@ -21,7 +21,7 @@ const DishAllergensSection = () => {
               type="checkbox"
               value={allergen}
               {...register("allergens")}
-              className=""
+              className="accent-teal"
             />
             <span>{allergen}</span>
           </label>

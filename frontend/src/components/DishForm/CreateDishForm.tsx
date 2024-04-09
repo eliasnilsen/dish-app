@@ -3,8 +3,9 @@ import DishDetails from "./DishDetails";
 import DishCategorySection from "./DishCategorySection";
 import DishAllergens from "./DishAllergens";
 import ImagesSection from "./ImagesSection";
-import { DishType } from "../../../../backend/src/shared/types";
+import { DishType, Ingredient } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
+import DishIngredientsSection from "./DishIngredientsSection";
 
 export type DishFormData = {
   name: string;
@@ -13,7 +14,8 @@ export type DishFormData = {
   prepTime: string;
   category: string;
   allergens: string[];
-  imageFile: FileList;
+  ingredients: Ingredient[];
+  imageFile?: FileList;
   imageUrl: string;
 };
 
@@ -44,31 +46,31 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
     formData.append("prepTime", data.prepTime);
     formData.append("category", data.category);
 
-    if (data.allergens.length === 0) {
-      formData.append("allergens", "");
-    }
+    const allergensJSON = JSON.stringify(data.allergens);
+    formData.append("allergens", allergensJSON);
 
-    data.allergens.forEach((allergen, index) => {
-      formData.append(`allergens[${index}]`, allergen);
-    });
+    const ingredientsJSON = JSON.stringify(data.ingredients);
+    formData.append("ingredients", ingredientsJSON);
 
     if (data.imageUrl) {
       formData.append(`imageUrl`, data.imageUrl);
     }
 
-    if (data.imageFile) formData.append(`imageFile`, data.imageFile[0]);
+    if (data.imageFile !== undefined)
+      formData.append(`imageFile`, data.imageFile[0]);
 
     onChanges(formData);
-    console.log(data);
+    console.log(formData);
   };
 
   return (
     <FormProvider {...formMethods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="select-none divide-y space-y-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="select-none space-y-8">
+        <h2 className="text-3xl font-bold">
+          {dish ? "Update dish" : "Create Dish"}
+        </h2>
         <DishDetails />
+        <DishIngredientsSection />
         <DishCategorySection />
         <DishAllergens />
         <ImagesSection />
@@ -76,7 +78,7 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-teal hover:brightness-75 font-bold text-white px-3 py-2 rounded disabled:opacity-50"
+            className="primary-btn-teal"
           >
             {dish ? "Save changes" : "Create dish"}
           </button>

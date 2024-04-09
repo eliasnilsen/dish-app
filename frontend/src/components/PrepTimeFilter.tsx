@@ -8,15 +8,15 @@ type Props = {
 const PrepTimeFilter = ({ selectedPrepTime, onChange }: Props) => {
   return (
     <div className="space-y-2">
-      <h2 className="font-bold">Preperation time</h2>
+      <h2 className="font-semibold">Preperation time</h2>
       {dishPrepTime.map((prepTime) => (
         <label
           key={prepTime}
-          className="flex items-center gap-1 rounded px-2 w-fit cursor-pointer"
+          className="flex items-center gap-1 w-fit cursor-pointer"
         >
           <input
             type="checkbox"
-            className="rounded cursor-pointer"
+            className="checkbox"
             value={prepTime}
             checked={selectedPrepTime.includes(prepTime)}
             onChange={onChange}

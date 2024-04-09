@@ -15,7 +15,7 @@ const ImagesSection = () => {
   const existingImageUrl = watch("imageUrl");
 
   return (
-    <div className="space-y-4 p-8 rounded">
+    <div className="space-y-4 rounded">
       <h2 className="text-2xl font-bold">Add Image</h2>
       <div className="flex flex-col gap-2">
         {existingImageUrl && (

@@ -11,7 +11,7 @@ const DishCategorySection = () => {
   const selectedCategory = watch("category");
 
   return (
-    <div className="space-y-4 p-8 rounded">
+    <div className="space-y-4 rounded">
       <h2 className="text-2xl font-bold">Category</h2>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
         {dishCategory.map((category) => (

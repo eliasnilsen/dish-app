@@ -6,13 +6,12 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        nunito: ["Nunito", "sans-serif"]
-      },
       colors: {
+        primaryBackground: "#FBF6EE",
         caution: "#FFC94A",
-        teal: "#43766C"
-      }
+        teal: "#43766C",
+        borderPrimary: "#000000"
+      },
     },
   },
   plugins: [],

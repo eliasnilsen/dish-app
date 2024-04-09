@@ -19,11 +19,11 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-2 bg-white border rounded-full overflow-hidden py-2 px-4"
+      className="flex items-center gap-2 bg-white component-border overflow-hidden p-2"
     >
       <div className="flex items-center gap-2">
         <button type="submit">
-          <LuSearch size={20} className="hover:text-teal" />
+          <LuSearch size={20} className="text-black" />
         </button>
 
         <input

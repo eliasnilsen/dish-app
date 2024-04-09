@@ -8,7 +8,7 @@ const RecentDishCard = ({ dish }: Props) => {
   return (
     <Link
       to={`/details/${dish._id}`}
-      className="relative cursor-pointer overflow-hidden rounded shadow-sm"
+      className="cursor-pointer overflow-hidden"
     >
       <div className="h-[300px]">
         <img
@@ -17,8 +17,10 @@ const RecentDishCard = ({ dish }: Props) => {
           className="w-full h-full object-cover object-center"
         />
       </div>
-      <div className="absolute bottom-0 p-4 bg-teal bg-opacity-100 w-full">
-        <span className="text-white tracking-tight text-2xl">{dish.name}</span>
+      <div className="w-full p-2 bg-white">
+        <span className="font-semibold text-xl text-black text-balance line-clamp-2">
+          {dish.name}
+        </span>
       </div>
     </Link>
   );

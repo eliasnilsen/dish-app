@@ -8,15 +8,15 @@ type Props = {
 const CategoryFilter = ({ selectedCategories, onChange }: Props) => {
   return (
     <div className="space-y-2">
-      <h2 className="font-bold">Categories</h2>
+      <h2 className="font-semibold">Categories</h2>
       {dishCategory.map((category) => (
         <label
           key={category}
-          className="flex items-center gap-1 rounded px-2 w-fit cursor-pointer"
+          className="flex items-center gap-1 w-fit cursor-pointer"
         >
           <input
             type="checkbox"
-            className="rounded cursor-pointer"
+            className="checkbox"
             value={category}
             checked={selectedCategories.includes(category)}
             onChange={onChange}

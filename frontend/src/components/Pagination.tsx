@@ -11,14 +11,14 @@ const Pagination = ({ page, pages, onPageChange }: Props) => {
   }
 
   return (
-    <div className="flex items-center p-1 bg-gray-100 rounded w-fit m-auto">
+    <div className="flex items-center p-1 bg-gray-100 w-fit m-auto">
       <ul className="flex items-center gap-1">
         {pageNumbers.map((pageNumber) => (
           <li
             key={pageNumber}
             role="button"
             onClick={() => onPageChange(pageNumber)}
-            className={`px-3 py-1 font-semibold rounded border border-gray-300 ${
+            className={`px-3 py-1 font-semibold border border-gray-300 ${
               page === pageNumber ? "bg-gray-300" : ""
             }`}
           >
