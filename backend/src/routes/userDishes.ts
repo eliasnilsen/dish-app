@@ -35,6 +35,7 @@ router.post(
     body("category").notEmpty().withMessage("category is required."),
     body("allergens"),
     body("ingredients").notEmpty().withMessage("ingredients are required."),
+    body("instructions").notEmpty().withMessage("instructions are required."),
     body("imageFile").notEmpty().withMessage("an image is required."),
   ],
   image.array("imageFile", 1),
@@ -50,10 +51,12 @@ router.post(
         category,
         allergens,
         ingredients,
+        instructions,
       } = req.body;
 
       const parsedAllergens = JSON.parse(allergens);
       const parsedIngredients = JSON.parse(ingredients);
+      const parsedInstructions = JSON.parse(instructions);
 
       const imageUrl = await uploadImage(imageFile[0]);
 
@@ -65,6 +68,7 @@ router.post(
         category,
         allergens: parsedAllergens,
         ingredients: parsedIngredients,
+        instructions: parsedInstructions,
         imageUrl,
         lastUpdated: new Date(),
         userId: req.userId,
@@ -117,6 +121,7 @@ router.put(
         category,
         allergens,
         ingredients,
+        instructions,
         imageUrl,
         userId,
       } = req.body;
@@ -125,6 +130,7 @@ router.put(
 
       const parsedAllergens = JSON.parse(allergens);
       const parsedIngredients = JSON.parse(ingredients);
+      const parsedInstructions = JSON.parse(instructions);
 
       const updatedDish: Partial<DishType> = {
         name,
@@ -134,6 +140,7 @@ router.put(
         category,
         allergens: parsedAllergens,
         ingredients: parsedIngredients,
+        instructions: parsedInstructions,
         imageUrl,
         lastUpdated: new Date(),
         userId,
@@ -155,6 +162,8 @@ router.put(
       if (imageFile[0] !== undefined) {
         const imageFile = req.files as Express.Multer.File[];
         const updatedImageUrl = await uploadImage(imageFile[0]);
+
+        await deleteImage(dish.imageUrl);
 
         dish.imageUrl = updatedImageUrl;
         await dish.save();
@@ -178,13 +187,17 @@ async function uploadImage(imageFile: Express.Multer.File) {
   return cloudinaryUpload.url;
 }
 
-// async function deleteImage(imageUrl: string) {
-//   const regex = /\/dishApp\/([a-zA-Z0-9]+)/;
-//   const match = imageUrl.match(regex)?.toString();
+async function deleteImage(imageUrl: string) {
+  const regex = /\/dishApp\/([a-zA-Z0-9]+)\.\w+/i;
+  const match = imageUrl.match(regex);
+  const formattedImageUrl = "dishApp/" + match![1];
 
-//   await cloudinary.v2.uploader
-//     .destroy(match as string)
-//     .then((result) => console.log(result));
-// }
+  cloudinary.v2.api
+    .delete_resources([formattedImageUrl], {
+      type: "upload",
+      resource_type: "image",
+    })
+    .then(console.log);
+}
 
 export default router;

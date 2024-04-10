@@ -6,6 +6,7 @@ import ImagesSection from "./ImagesSection";
 import { DishType, Ingredient } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
 import DishIngredientsSection from "./DishIngredientsSection";
+import DishInstructionsSection from "./DishInstructionsSection";
 
 export type DishFormData = {
   name: string;
@@ -15,6 +16,7 @@ export type DishFormData = {
   category: string;
   allergens: string[];
   ingredients: Ingredient[];
+  instructions: string[];
   imageFile?: FileList;
   imageUrl: string;
 };
@@ -49,8 +51,11 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
     const allergensJSON = JSON.stringify(data.allergens);
     formData.append("allergens", allergensJSON);
 
-    const ingredientsJSON = JSON.stringify(data.ingredients);
+    const ingredientsJSON = JSON.stringify(data.ingredients.reverse());
     formData.append("ingredients", ingredientsJSON);
+
+    const instructionsJSON = JSON.stringify(data.instructions.reverse());
+    formData.append("instructions", instructionsJSON);
 
     if (data.imageUrl) {
       formData.append(`imageUrl`, data.imageUrl);
@@ -71,6 +76,7 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
         </h2>
         <DishDetails />
         <DishIngredientsSection />
+        <DishInstructionsSection />
         <DishCategorySection />
         <DishAllergens />
         <ImagesSection />

@@ -9,17 +9,17 @@ const DishDetails = () => {
   } = useFormContext<DishFormData>();
 
   return (
-    <div className="space-y-4 rounded">
+    <div className="space-y-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col">
-          <label className="flex flex-col font-semibold text-sm">
+          <label className="flex flex-col">
             Name
             <input
               {...register("name", {
                 required: "This field is required",
               })}
               type="text"
-              className="border rounded w-full py-1 px-2 mt-1 text-base font-normal"
+              className="w-full py-1 px-2 mt-1 text-base font-normal"
             />
           </label>
           {errors.name && (
@@ -30,14 +30,14 @@ const DishDetails = () => {
         </div>
 
         <div className="flex flex-col">
-          <label className="flex flex-col font-semibold text-sm">
+          <label className="flex flex-col">
             Description
             <textarea
               {...register("description", {
                 required: "This field is required",
               })}
               rows={10}
-              className="border resize-none rounded w-full py-1 px-2 mt-1 text-base font-normal"
+              className="resize-none w-full py-1 px-2 mt-1 text-base font-normal"
             ></textarea>
           </label>
           {errors.description && (

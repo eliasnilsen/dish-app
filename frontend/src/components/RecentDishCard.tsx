@@ -10,7 +10,7 @@ const RecentDishCard = ({ dish }: Props) => {
       to={`/details/${dish._id}`}
       className="cursor-pointer overflow-hidden"
     >
-      <div className="h-[300px]">
+      <div className="h-[20rem]">
         <img
           src={dish.imageUrl}
           alt={`image of featured dish by the name of: ${dish.name}`}

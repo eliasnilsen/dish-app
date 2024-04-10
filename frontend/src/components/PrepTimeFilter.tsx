@@ -7,7 +7,7 @@ type Props = {
 
 const PrepTimeFilter = ({ selectedPrepTime, onChange }: Props) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-fit">
       <h2 className="font-semibold">Preperation time</h2>
       {dishPrepTime.map((prepTime) => (
         <label

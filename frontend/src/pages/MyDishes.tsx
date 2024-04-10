@@ -25,7 +25,7 @@ const MyDishes = () => {
           New dish
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {userDishes?.map((dish) => (
           <DishSearchFieldCard key={dish._id} route="edit-dish" dish={dish} />
         ))}

@@ -81,9 +81,9 @@ const Search = () => {
   };
 
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-8 gap-2">
-      <div className="col-span-1 lg:col-span-2 p-4 sticky top-24 h-fit max-h-[calc(100dvh-7rem)] overflow-y-scroll overscroll-auto bg-white">
-        <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-8 gap-y-2 md:gap-2">
+      <div className="md:col-span-2 p-4 md:sticky md:top-24 h-fit md:max-h-[calc(100dvh-7rem)] overflow-y-scroll overscroll-auto">
+        <div className="flex flex-wrap gap-4 justify-between md:block md:space-y-4">
           <CategoryFilter
             selectedCategories={selectedCategories}
             onChange={handleCategoriesChange}
@@ -102,7 +102,7 @@ const Search = () => {
           />
         </div>
       </div>
-      <div className="col-span-2 lg:col-span-6 p-2 gap-2 space-y-4">
+      <div className="md:col-span-6 p-2 gap-2 space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-lg">
             {dishData?.pagination.total} dishes found.

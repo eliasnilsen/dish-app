@@ -11,16 +11,16 @@ const DishCategorySection = () => {
   const selectedCategory = watch("category");
 
   return (
-    <div className="space-y-4 rounded">
-      <h2 className="text-2xl font-bold">Category</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+    <div className="space-y-4">
+      <h2 className="">Category</h2>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 p-2">
         {dishCategory.map((category) => (
           <label
             key={category}
             className={
               selectedCategory === category
-                ? "flex justify-center cursor-pointer bg-teal text-white rounded-full text-sm px-4 py-3 font-semibold"
-                : "flex justify-center cursor-pointer border rounded-full text-sm px-4 py-3 font-semibold"
+                ? "flex justify-center cursor-pointer bg-black text-white text-sm px-4 py-3 font-semibold"
+                : "flex justify-center cursor-pointer border-2 border-black text-sm px-4 py-3 font-semibold"
             }
           >
             <input

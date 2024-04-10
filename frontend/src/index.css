@@ -4,10 +4,10 @@
 
 @layer components {
     .primary-btn-teal {
-      @apply bg-white text-black hover:bg-black hover:text-white font-semibold py-1 px-2 border-2 border-black;
+      @apply bg-white text-black hover:bg-black hover:text-white font-semibold py-1 px-2 border border-black;
     }
     .primary-btn-danger {
-        @apply bg-red-600 text-white font-semibold py-1 px-2 border-2 border-black border-opacity-0 hover:border-opacity-100 hover:text-black;
+        @apply bg-red-600 text-white font-semibold py-1 px-2 border border-black border-opacity-0 hover:border-opacity-100 hover:text-black;
       }
     .pagination-btn {
       @apply bg-gray-200 text-black font-semibold py-1 px-2 cursor-pointer;
@@ -15,11 +15,10 @@
     .pagination-btn-disabled {
       @apply bg-gray-200 text-black font-semibold py-1 px-2 opacity-50;
     }
-
     .checkbox {
-      @apply appearance-none h-4 w-4 cursor-pointer checked:bg-teal border-2 border-black checked:border-teal
+      @apply appearance-none h-4 w-4 cursor-pointer checked:bg-teal border border-black checked:border-teal rounded-sm;
     }
     .component-border {
-      @apply border
+      @apply border border-black;
     }
   }

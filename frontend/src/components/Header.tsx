@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar.tsx";
 const Header = () => {
   const { isUserLoggedIn } = useAppContext();
   return (
-    <div className="bg-white h-20 sticky top-0 z-50 flex items-center">
+    <div className="bg-white h-20 sticky top-0 z-50 flex items-center shadow">
       <div className="container mx-auto flex justify-between items-center">
         <span className="text-3xl font-bold tracking-tight text-teal">
           <Link to="/" className="">

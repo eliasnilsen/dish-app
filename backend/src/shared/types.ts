@@ -8,6 +8,7 @@ export type DishType = {
   category: string;
   allergens: string[];
   ingredients: Ingredient[];
+  instructions: string[];
   imageUrl: string;
   lastUpdated: Date;
 };

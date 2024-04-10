@@ -7,7 +7,7 @@ type Props = {
 
 const CategoryFilter = ({ selectedCategories, onChange }: Props) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-fit">
       <h2 className="font-semibold">Categories</h2>
       {dishCategory.map((category) => (
         <label

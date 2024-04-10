@@ -7,7 +7,7 @@ type Props = {
 
 const SpiceLevelFilter = ({ selectedSpiceLevel, onChange }: Props) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-fit">
       <h2 className="font-semibold">Spice</h2>
       {dishSpiceLevel.map((spiceLevel) => (
         <label

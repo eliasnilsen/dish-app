@@ -17,6 +17,7 @@ const dishSchema = new mongoose.Schema<DishType>({
   category: { type: String, required: true },
   allergens: [{ type: String }],
   ingredients: { type: [ingredientSchema], required: true },
+  instructions: [{ type: String, required: true }],
   imageUrl: { type: String, required: true },
   lastUpdated: { type: Date, required: true },
 });

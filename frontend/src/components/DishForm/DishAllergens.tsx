@@ -9,19 +9,19 @@ const DishAllergensSection = () => {
   } = useFormContext<DishFormData>();
 
   return (
-    <div className="space-y-4 rounded">
-      <h2 className="text-2xl font-bold">Allergens</h2>
-      <div className="grid grid-cols-3 lg:grid-cols-6 gap-2">
+    <div className="space-y-4">
+      <h2 className="">Allergens</h2>
+      <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 bg-white p-2">
         {dishAllergens.map((allergen) => (
           <label
             key={allergen}
-            className="flex gap-2 items-center cursor-pointer border rounded text-sm px-2 py-2 font-semibold"
+            className="flex gap-2 items-center cursor-pointer text-sm px-2 py-2 font-semibold"
           >
             <input
               type="checkbox"
               value={allergen}
               {...register("allergens")}
-              className="accent-teal"
+              className="checkbox"
             />
             <span>{allergen}</span>
           </label>

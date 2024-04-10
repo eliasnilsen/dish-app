@@ -7,7 +7,7 @@ type Props = {
 
 const AllergensFilter = ({ selectedAllergens, onChange }: Props) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-fit">
       <h2 className="font-semibold">{`Allergens (Does not contain)`}</h2>
       {dishAllergens.map((allergens) => (
         <label

@@ -32,9 +32,9 @@ const DishDetails = () => {
           className="w-full max-h-[30rem] object-cover object-center"
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 gap-y-4">
         {/* Dish details section */}
-        <div className="p-6 sm:p-8 flex flex-col items-center gap-6 bg-white col-span-2">
+        <div className="p-6 sm:p-8 flex flex-col gap-6 bg-white md:col-span-2">
           <div className="flex items-center justify-center gap-4 px-3 py-1">
             <span className="flex items-center gap-1">
               <LuChefHat size={20} strokeWidth={1.5} />
@@ -49,18 +49,17 @@ const DishDetails = () => {
               {dishData.spiceLevel}
             </span>
           </div>
-          <h2 className="text-5xl font-bold text-balance text-center">
+          <h2 className="text-5xl font-semibold text-balance text-center">
             {dishData.name}
           </h2>
 
           <p className="text-balance text-center md:text-lg">
             {dishData.description}
           </p>
-          {dishData.allergens.length > 0 && (
+
+          {dishData.allergens && (
             <div className="flex flex-col items-center gap-1 p-2 text-center">
-              <h1 className="text-balance">
-                This dish contains the following allergens:
-              </h1>
+              <h1 className="text-balance">This dish contains:</h1>
               <div className="flex flex-wrap gap-2">
                 {dishData.allergens.map((allergen) => (
                   <span
@@ -75,8 +74,26 @@ const DishDetails = () => {
           )}
         </div>
 
+        {/* Instructions */}
+        <div className="p-6 sm:p-8 flex flex-col gap-6 bg-white md:col-span-3 order-last w-full">
+          <div className="space-y-8">
+            <h2 className="text-2xl font-semibold">Instructions</h2>
+            {dishData.instructions.map((instruction, index) => (
+              <div key={instruction} className="">
+                <label className="flex gap-2 items-baseline cursor-pointer">
+                  <div className="flex items-baseline gap-2">
+                    <input type="checkbox" className="checkbox" />
+                    <span className="font-semibold">{index + 1}.</span>
+                  </div>
+                  <span className="flex-1 text-pretty">{instruction}</span>
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Ingredients list */}
-        <div className="p-6 sm:p-8 flex flex-col bg-white col-span-1 sm:order-first order-last space-y-4">
+        <div className="p-6 sm:p-8 flex flex-col bg-white md:col-span-1 md:order-first space-y-4 h-fit">
           {/* Portions controller */}
           <div className="flex flex-col gap-4 items-center">
             <h2 className="text-2xl font-semibold">Ingredients</h2>
@@ -91,7 +108,7 @@ const DishDetails = () => {
                 >
                   <LuMinus size={30} />
                 </button>
-                <div className="flex flex-col justify-center items-center font-semibold">
+                <div className="flex flex-col justify-center items-center text-xl">
                   <span>{portions}</span>
                   <span>Portions</span>
                 </div>
@@ -109,10 +126,10 @@ const DishDetails = () => {
           </div>
 
           {/* Ingredients */}
-          <div className="space-y-1">
+          <div className="space-y-2">
             {dishData.ingredients.map((item) => (
-              <div key={item.name} className="flex items-center gap-2 text-sm">
-                <div className="flex gap-1 font-semibold">
+              <div key={item.name} className="flex items-baseline gap-2">
+                <div className="flex gap-1">
                   <span>{item.quantity * portions}</span>
                   <span>{item.unit}</span>
                 </div>
