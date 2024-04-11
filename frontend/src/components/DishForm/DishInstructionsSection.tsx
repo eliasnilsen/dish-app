@@ -41,7 +41,7 @@ const DishInstructionsSection = () => {
                     {...register(`instructions.${index}`, {
                       required: true,
                     })}
-                    className="p-1 w-full border-2 border-black focus:outline-none"
+                    className="p-1 w-full focus:outline-none"
                   />
                 </label>
 

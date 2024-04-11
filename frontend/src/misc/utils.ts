@@ -36,5 +36,6 @@ export const dishIngredientUnits = [
   "ml",
   "dl",
   "l",
-  "piece(s)",
+  "piece",
+  "cup",
 ];

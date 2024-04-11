@@ -15,8 +15,8 @@ export type DishType = {
 
 export type Ingredient = {
   name: string;
-  quantity: number;
-  unit: string;
+  quantity?: number;
+  unit?: string;
 };
 
 export type DishSearchResponse = {

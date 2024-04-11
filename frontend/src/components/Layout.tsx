@@ -11,7 +11,9 @@ const Layout = ({ children }: Props) => {
     <AppContextProvider>
       <div className="flex flex-col min-h-screen select-none bg-stone-100 text-offBlack">
         <Header />
-        <div className="mx-auto py-4 flex-1 container">{children}</div>
+        <div className="mx-auto py-4 flex-1 container max-w-[1100px]">
+          {children}
+        </div>
         <Footer />
       </div>
     </AppContextProvider>

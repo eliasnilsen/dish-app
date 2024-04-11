@@ -26,7 +26,7 @@ const DishIngredientsSection = () => {
             <button
               className="primary-btn-teal"
               onClick={() => {
-                prepend({ name: "", quantity: 0, unit: "" });
+                prepend({ name: "", quantity: undefined, unit: undefined });
               }}
             >
               New
@@ -42,29 +42,27 @@ const DishIngredientsSection = () => {
                       required: true,
                     })}
                     type="text"
-                    className="p-1"
+                    className="p-1 focus:outline-none"
                   />
                 </label>
 
                 <label className="flex flex-col">
                   Quantity
                   <input
-                    {...register(`ingredients.${index}.quantity`, {
-                      required: true,
-                    })}
+                    {...register(`ingredients.${index}.quantity`)}
                     type="number"
-                    className="p-1"
+                    step="0.25"
+                    className="p-1 focus:outline-none"
                   />
                 </label>
 
                 <label className="flex flex-col">
                   Unit
                   <select
-                    {...register(`ingredients.${index}.unit`, {
-                      required: "This field is required",
-                    })}
-                    className="p-1 bg-white"
+                    {...register(`ingredients.${index}.unit`)}
+                    className="p-1 bg-white focus:outline-none"
                   >
+                    <option value={undefined}></option>
                     {dishIngredientUnits.map((unit) => (
                       <option key={unit} value={unit} className="">
                         {unit}

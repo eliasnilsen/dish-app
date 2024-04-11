@@ -29,7 +29,7 @@ const DishDetails = () => {
         <img
           src={dishData.imageUrl}
           alt={`image of ${dishData.name}`}
-          className="w-full max-h-[30rem] object-cover object-center"
+          className="w-full max-h-[40rem] object-cover object-center"
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 gap-y-4">
@@ -59,7 +59,7 @@ const DishDetails = () => {
 
           {dishData.allergens && (
             <div className="flex flex-col items-center gap-1 p-2 text-center">
-              <h1 className="text-balance">This dish contains:</h1>
+              <h1 className="text-balance">Allergens:</h1>
               <div className="flex flex-wrap gap-2">
                 {dishData.allergens.map((allergen) => (
                   <span
@@ -93,7 +93,7 @@ const DishDetails = () => {
         </div>
 
         {/* Ingredients list */}
-        <div className="p-6 sm:p-8 flex flex-col bg-white md:col-span-1 md:order-first space-y-4 h-fit">
+        <div className="p-6 sm:p-8 flex flex-col bg-white md:col-span-1 md:order-first space-y-4">
           {/* Portions controller */}
           <div className="flex flex-col gap-4 items-center">
             <h2 className="text-2xl font-semibold">Ingredients</h2>
@@ -128,11 +128,9 @@ const DishDetails = () => {
           {/* Ingredients */}
           <div className="space-y-2">
             {dishData.ingredients.map((item) => (
-              <div key={item.name} className="flex items-baseline gap-2">
-                <div className="flex gap-1">
-                  <span>{item.quantity * portions}</span>
-                  <span>{item.unit}</span>
-                </div>
+              <div key={item.name} className="flex items-baseline gap-1">
+                {item.quantity && <span>{item.quantity * portions}</span>}
+                {item.unit && <span>{item.unit}</span>}
                 <span className="flex flex-1">{item.name}</span>
               </div>
             ))}

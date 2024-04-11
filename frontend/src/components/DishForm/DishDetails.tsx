@@ -19,7 +19,7 @@ const DishDetails = () => {
                 required: "This field is required",
               })}
               type="text"
-              className="w-full py-1 px-2 mt-1 text-base font-normal"
+              className="w-full py-1 px-2 mt-1 text-base font-normal focus:outline-none"
             />
           </label>
           {errors.name && (
@@ -37,7 +37,7 @@ const DishDetails = () => {
                 required: "This field is required",
               })}
               rows={10}
-              className="resize-none w-full py-1 px-2 mt-1 text-base font-normal"
+              className="resize-none w-full py-1 px-2 mt-1 text-base font-normal focus:outline-none"
             ></textarea>
           </label>
           {errors.description && (

@@ -121,7 +121,7 @@ const Search = () => {
             <option value="prepTimeAsc">Prep time (high to low)</option>
           </select>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {dishData?.data.map((dish) => (
             <DishSearchFieldCard route="details" key={dish._id} dish={dish} />
           ))}

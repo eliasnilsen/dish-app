@@ -4,8 +4,8 @@ import { DishType } from "../shared/types";
 
 const ingredientSchema = new mongoose.Schema<Ingredient>({
   name: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  unit: { type: String, required: true },
+  quantity: { type: Number },
+  unit: { type: String },
 });
 
 const dishSchema = new mongoose.Schema<DishType>({
