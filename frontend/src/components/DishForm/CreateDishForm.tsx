@@ -24,10 +24,11 @@ export type DishFormData = {
 type Props = {
   dish?: DishType;
   onChanges: (data: FormData) => void;
+  onDelete?: (data: DishType) => void;
   isLoading: boolean;
 };
 
-const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
+const CreateDishForm = ({ dish, onChanges, onDelete, isLoading }: Props) => {
   const formMethods = useForm<DishFormData>();
 
   const { handleSubmit, reset } = formMethods;
@@ -51,10 +52,10 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
     const allergensJSON = JSON.stringify(data.allergens);
     formData.append("allergens", allergensJSON);
 
-    const ingredientsJSON = JSON.stringify(data.ingredients.reverse());
+    const ingredientsJSON = JSON.stringify(data.ingredients);
     formData.append("ingredients", ingredientsJSON);
 
-    const instructionsJSON = JSON.stringify(data.instructions.reverse());
+    const instructionsJSON = JSON.stringify(data.instructions);
     formData.append("instructions", instructionsJSON);
 
     if (data.imageUrl) {
@@ -80,7 +81,16 @@ const CreateDishForm = ({ dish, onChanges, isLoading }: Props) => {
         <DishCategorySection />
         <DishAllergens />
         <ImagesSection />
-        <span className="flex justify-end p-8">
+        <span className="flex justify-end gap-2 p-8">
+          {dish && (
+            <button
+              onClick={() => onDelete!(dish)}
+              className="primary-btn-danger"
+              type="button"
+            >
+              Delete dish
+            </button>
+          )}
           <button
             disabled={isLoading}
             type="submit"

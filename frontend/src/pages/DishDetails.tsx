@@ -78,17 +78,21 @@ const DishDetails = () => {
         <div className="p-6 sm:p-8 flex flex-col gap-6 bg-white md:col-span-3 order-last w-full">
           <div className="space-y-8">
             <h2 className="text-2xl font-semibold">Instructions</h2>
-            {dishData.instructions.map((instruction, index) => (
-              <div key={instruction} className="">
-                <label className="flex gap-2 items-baseline cursor-pointer">
-                  <div className="flex items-baseline gap-2">
-                    <input type="checkbox" className="checkbox" />
-                    <span className="font-semibold">{index + 1}.</span>
-                  </div>
-                  <span className="flex-1 text-pretty">{instruction}</span>
-                </label>
-              </div>
-            ))}
+            {dishData.instructions
+              .map((instruction, index) => (
+                <div key={instruction} className="">
+                  <label className="flex gap-2 items-baseline cursor-pointer">
+                    <div className="flex items-baseline gap-2">
+                      <input type="checkbox" className="checkbox" />
+                      <span className="font-semibold">
+                        {dishData.instructions.length - index}.
+                      </span>
+                    </div>
+                    <span className="flex-1 text-pretty">{instruction}</span>
+                  </label>
+                </div>
+              ))
+              .reverse()}
           </div>
         </div>
 
@@ -127,13 +131,15 @@ const DishDetails = () => {
 
           {/* Ingredients */}
           <div className="space-y-2">
-            {dishData.ingredients.map((item) => (
-              <div key={item.name} className="flex items-baseline gap-1">
-                {item.quantity && <span>{item.quantity * portions}</span>}
-                {item.unit && <span>{item.unit}</span>}
-                <span className="flex flex-1">{item.name}</span>
-              </div>
-            ))}
+            {dishData.ingredients
+              .map((item) => (
+                <div key={item.name} className="flex items-baseline gap-1">
+                  {item.quantity && <span>{item.quantity * portions}</span>}
+                  {item.unit && <span>{item.unit}</span>}
+                  <span className="flex flex-1">{item.name}</span>
+                </div>
+              ))
+              .reverse()}
           </div>
         </div>
       </div>

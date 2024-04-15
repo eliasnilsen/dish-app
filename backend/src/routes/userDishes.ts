@@ -176,6 +176,34 @@ router.put(
   }
 );
 
+// delete existing dish.
+router.delete("/:id", verifyToken, async (req: Request, res: Response) => {
+  const id = req.params.id.toString();
+
+  try {
+    const dish = await Dish.findOne({
+      _id: id,
+      userId: req.userId,
+    });
+
+    const imageUrl = dish!.imageUrl;
+
+    const deletedDish = await Dish.deleteOne({
+      _id: id,
+      userId: req.userId,
+    });
+
+    await deleteImage(imageUrl);
+
+    if (!deletedDish) {
+      return res.status(404).json({ message: "Dish not found" });
+    }
+    res.json({ message: "Item deleted successfully", deletedDish });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting dish." });
+  }
+});
+
 async function uploadImage(imageFile: Express.Multer.File) {
   const b64 = Buffer.from(imageFile.buffer).toString("base64");
   let dataURI = "data:" + imageFile.mimetype + ";base64," + b64;

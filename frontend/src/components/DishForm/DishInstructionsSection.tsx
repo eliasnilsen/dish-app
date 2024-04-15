@@ -35,7 +35,9 @@ const DishInstructionsSection = () => {
             return (
               <div key={field.id} className="flex items-end gap-2 w-full">
                 <label className="flex flex-1 items-start gap-2">
-                  <span className="font-semibold">{index + 1}.</span>
+                  <span className="font-semibold">
+                    {fields.length - index}.
+                  </span>
 
                   <textarea
                     {...register(`instructions.${index}`, {

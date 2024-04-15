@@ -6,7 +6,7 @@ const Home = () => {
   const { data: dishes } = useQuery("getDishes", () => apiClient.getDishes());
 
   const topRowDishes = dishes?.slice(0, 2) || [];
-  const bottomRowDishes = dishes?.slice(2, 6) || [];
+  const bottomRowDishes = dishes?.slice(2, 5) || [];
 
   return (
     <div className="space-y-4">

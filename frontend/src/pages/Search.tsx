@@ -82,7 +82,7 @@ const Search = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-8 gap-y-2 md:gap-2">
-      <div className="md:col-span-2 p-4 md:sticky md:top-24 h-fit md:max-h-[calc(100dvh-7rem)] overflow-y-scroll overscroll-auto">
+      <div className="md:col-span-2 p-2 md:sticky md:top-24 h-fit md:max-h-[calc(100dvh-7rem)] overflow-y-scroll overscroll-auto">
         <div className="flex flex-wrap gap-4 justify-between md:block md:space-y-4">
           <CategoryFilter
             selectedCategories={selectedCategories}
@@ -103,10 +103,8 @@ const Search = () => {
         </div>
       </div>
       <div className="md:col-span-6 p-2 gap-2 space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-lg">
-            {dishData?.pagination.total} dishes found.
-          </h2>
+        <div className="flex justify-between">
+          <h2 className="text-lg">{dishData?.pagination.total} dishes found</h2>
           <select
             value={sortOption}
             onChange={(event) => setSortOption(event.target.value)}
@@ -115,13 +113,13 @@ const Search = () => {
             <option value="" disabled>
               Sort by
             </option>
-            <option value="spiceLevelDes">Spice level (low to high)</option>
-            <option value="spiceLevelAsc">Spice level (high to low)</option>
-            <option value="prepTimeDes">Prep time (low to high)</option>
-            <option value="prepTimeAsc">Prep time (high to low)</option>
+            <option value="spiceLevelDes">Spice level (mild to hot)</option>
+            <option value="spiceLevelAsc">Spice level (hot to mild)</option>
+            <option value="prepTimeDes">Prep time (short to long)</option>
+            <option value="prepTimeAsc">Prep time (long to short)</option>
           </select>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
           {dishData?.data.map((dish) => (
             <DishSearchFieldCard route="details" key={dish._id} dish={dish} />
           ))}

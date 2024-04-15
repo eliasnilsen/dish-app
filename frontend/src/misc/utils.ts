@@ -20,12 +20,18 @@ export const dishAllergens = [
 ];
 
 export const dishCategory = [
-  "Italian",
-  "Chinese",
-  "Indian",
-  "Thai",
-  "French",
-  "American",
+  "Appetizers",
+  "Salads",
+  "Soups and stews",
+  "Pasta and noodles",
+  "Rice dishes",
+  "Main courses",
+  "Sandwiches and wraps",
+  "Pizza",
+  "Bbq",
+  "Breakfast",
+  "Desserts",
+  "Cakes",
 ];
 
 export const dishIngredientUnits = [
@@ -36,6 +42,7 @@ export const dishIngredientUnits = [
   "ml",
   "dl",
   "l",
-  "piece",
+  "lbs",
   "cup",
+  "ounce",
 ];

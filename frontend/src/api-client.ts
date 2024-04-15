@@ -196,3 +196,17 @@ export const getDishById = async (dishId: string): Promise<DishType> => {
 
   return response.json();
 };
+
+// get dish by id.
+export const deleteUserDishById = async (dish: DishType) => {
+  const response = await fetch(`${API_BASE_URL}/api/my-dishes/${dish._id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching dish.");
+  }
+
+  return response.json();
+};
