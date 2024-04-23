@@ -110,10 +110,7 @@ const RegisterForm = () => {
         </span>
 
         <span>
-          <button
-            type="submit"
-            className="bg-blue-600 font-bold text-white px-3 py-2 rounded"
-          >
+          <button type="submit" className="primary-btn-teal">
             Create Account
           </button>
         </span>

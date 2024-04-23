@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer components {
-    .primary-btn-teal {
+    .primary-btn-teal-ghost {
       @apply hover:bg-teal bg-transparent hover:text-white font-semibold py-1 px-2 border-2 border-teal text-teal rounded;
+    }
+    .primary-btn-teal {
+      @apply bg-teal hover:bg-teal/80 text-white font-semibold py-1 px-2 border-2 border-teal rounded;
     }
     .primary-btn-danger {
         @apply bg-red-600 text-white font-semibold py-1 px-2 border border-black border-opacity-0 hover:border-opacity-100 hover:text-black;

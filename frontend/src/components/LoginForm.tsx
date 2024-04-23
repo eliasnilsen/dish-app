@@ -89,10 +89,7 @@ const LoginForm = () => {
         </span>
 
         <span>
-          <button
-            type="submit"
-            className="bg-teal font-bold text-white px-3 py-2 rounded-md hover:brightness-75"
-          >
+          <button type="submit" className="primary-btn-teal">
             Login
           </button>
         </span>
