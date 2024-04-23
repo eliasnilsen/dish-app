@@ -44,17 +44,17 @@ const ImagesSection = () => {
                 return true;
               }
 
-              if (!imageFile[0] && !existingImageUrl) {
+              if (!imageFile![0] && !existingImageUrl) {
                 return "Image is required.";
               }
 
-              if (existingImageUrl && imageFile[0]) {
+              if (existingImageUrl && imageFile![0]) {
                 return "Max one image.";
               }
 
               if (
-                imageFile.length > 0 &&
-                imageFile[0].size > MAX_IMAGE_FILE_SIZE
+                imageFile!.length > 0 &&
+                imageFile![0].size > MAX_IMAGE_FILE_SIZE
               ) {
                 return "Max image size is 5mb.";
               }
