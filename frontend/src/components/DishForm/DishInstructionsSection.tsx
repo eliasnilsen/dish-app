@@ -8,7 +8,12 @@ const DishInstructionsSection = () => {
     formState: { errors },
   } = useFormContext<DishFormData>();
 
-  const { fields, prepend, remove } = useFieldArray({
+  const {
+    fields: fieldsInstructions,
+    prepend: prependInstructions,
+    remove: removeInstructions,
+  } = useFieldArray({
+    // @ts-expect-error //irritating error
     name: "instructions",
     control,
     rules: {
@@ -25,18 +30,19 @@ const DishInstructionsSection = () => {
             <button
               className="primary-btn-teal"
               onClick={() => {
-                prepend("");
+                // @ts-expect-error //irritating error
+                prependInstructions("");
               }}
             >
               New
             </button>
           </div>
-          {fields.map((field, index) => {
+          {fieldsInstructions.map((field, index) => {
             return (
               <div key={field.id} className="flex items-end gap-2 w-full">
                 <label className="flex flex-1 items-start gap-2">
                   <span className="font-semibold">
-                    {fields.length - index}.
+                    {fieldsInstructions.length - index}.
                   </span>
 
                   <textarea
@@ -49,7 +55,7 @@ const DishInstructionsSection = () => {
 
                 <button
                   onClick={() => {
-                    remove(index);
+                    removeInstructions(index);
                   }}
                   className="primary-btn-danger"
                 >

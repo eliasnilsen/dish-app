@@ -9,7 +9,11 @@ const DishIngredientsSection = () => {
     formState: { errors },
   } = useFormContext<DishFormData>();
 
-  const { fields, prepend, remove } = useFieldArray({
+  const {
+    fields: fieldsIngredients,
+    prepend: prependIngredients,
+    remove: RemoveIngredients,
+  } = useFieldArray({
     name: "ingredients",
     control,
     rules: {
@@ -26,13 +30,17 @@ const DishIngredientsSection = () => {
             <button
               className="primary-btn-teal"
               onClick={() => {
-                prepend({ name: "", quantity: undefined, unit: undefined });
+                prependIngredients({
+                  name: "",
+                  quantity: undefined,
+                  unit: undefined,
+                });
               }}
             >
               New
             </button>
           </div>
-          {fields.map((field, index) => {
+          {fieldsIngredients.map((field, index) => {
             return (
               <div key={field.id} className="flex items-end gap-2 w-full">
                 <label className="flex flex-col">
@@ -73,7 +81,7 @@ const DishIngredientsSection = () => {
 
                 <button
                   onClick={() => {
-                    remove(index);
+                    RemoveIngredients(index);
                   }}
                   className="primary-btn-danger"
                 >

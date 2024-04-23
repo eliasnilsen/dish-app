@@ -13,6 +13,10 @@ export type DishType = {
   lastUpdated: Date;
 };
 
+export type Instruction = {
+  instruction: string;
+};
+
 export type Ingredient = {
   name: string;
   quantity?: number;
